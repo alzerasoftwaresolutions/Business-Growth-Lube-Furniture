@@ -46,7 +46,7 @@ export const ProductCard: React.FC<ProductCardProps> = ({ product, onView, varia
         <div className={`flex items-center justify-between gap-3 ${isLarge ? 'mt-8' : 'mt-auto pt-4'}`}>
           <button
             onClick={() => onView(product)}
-            className="inline-flex items-center gap-1.5 rounded-full bg-clay px-4 py-2 text-xs font-semibold uppercase tracking-editorial text-white transition-colors hover:bg-clay-dark focus:outline-none focus:ring-2 focus:ring-clay/50"
+            className="inline-flex items-center gap-1.5 rounded-full bg-clay px-4 py-2 text-xs font-semibold uppercase tracking-editorial text-white transition-all hover:bg-clay-dark active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-clay/50"
           >
             View Product
             <ArrowUpRight size={13} strokeWidth={2} />

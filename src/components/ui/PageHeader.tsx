@@ -39,7 +39,7 @@ export const CTAButtonGroup: React.FC<{
   <div className="mt-10 flex flex-col gap-3 sm:flex-row sm:items-center">
     <button
       onClick={onPrimary}
-      className="group inline-flex items-center justify-center gap-2 rounded-full bg-clay px-8 py-4 text-sm font-medium text-white transition-colors hover:bg-clay-dark focus:outline-none focus:ring-2 focus:ring-clay/50"
+      className="group inline-flex items-center justify-center gap-2 rounded-full bg-clay px-8 py-4 text-sm font-medium text-white transition-all hover:bg-clay-dark active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-clay/50"
     >
       {primaryLabel}
       <ArrowRight size={16} strokeWidth={2} className="transition-transform group-hover:translate-x-1" />
@@ -47,7 +47,7 @@ export const CTAButtonGroup: React.FC<{
     {secondaryLabel && onSecondary && (
       <button
         onClick={onSecondary}
-        className="inline-flex items-center justify-center rounded-full border border-dark-graphite/30 bg-soft-white px-8 py-4 text-sm font-medium text-dark-graphite transition-colors hover:border-dark-graphite focus:outline-none focus:ring-2 focus:ring-clay/50"
+        className="inline-flex items-center justify-center rounded-full border border-dark-graphite/30 bg-soft-white px-8 py-4 text-sm font-medium text-dark-graphite transition-all hover:border-dark-graphite active:scale-[0.98] focus:outline-none focus:ring-2 focus:ring-clay/50"
       >
         {secondaryLabel}
       </button>
