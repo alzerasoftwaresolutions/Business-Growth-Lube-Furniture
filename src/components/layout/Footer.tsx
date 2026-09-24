@@ -40,7 +40,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onExploreCollection 
               </li>
               <li className="flex items-start gap-3">
                 <MapPin size={15} strokeWidth={1.75} className="mt-0.5 shrink-0 text-clay-light" />
-                <span>Showroom & Studio — Address Line, City</span>
+                <span>Showroom & Studio — Addis Ababa, Ethiopia</span>
               </li>
               <li className="flex items-start gap-3">
                 <Clock size={15} strokeWidth={1.75} className="mt-0.5 shrink-0 text-clay-light" />

@@ -45,7 +45,7 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onRequestQuote }) => {
               </li>
               <li className="flex items-start gap-3">
                 <MapPin size={17} strokeWidth={1.75} className="mt-0.5 shrink-0 text-clay" />
-                Showroom & Studio — Address Line, City
+                Showroom & Studio — Addis Ababa, Ethiopia
               </li>
               <li className="flex items-start gap-3">
                 <Clock size={17} strokeWidth={1.75} className="mt-0.5 shrink-0 text-clay" />
