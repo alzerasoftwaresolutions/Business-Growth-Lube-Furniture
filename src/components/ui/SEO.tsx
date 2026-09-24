@@ -31,8 +31,8 @@ export const SEO: React.FC<SEOProps> = ({
     url: 'https://www.lubefurniture.com',
     logo: 'https://www.lubefurniture.com/assets/photo_2026-08-08_22-58-31.jpg',
     description: 'Lube Furniture designs and crafts premium, minimalist furniture and interior modular systems for residential and commercial spaces.',
-    telephone: '+00 000 000 0000',
-    email: 'hello@lubefurniture.com',
+    telephone: '+251 99 407 7622',
+    email: 'samuelassefa075@gmail.com',
     address: {
       '@type': 'PostalAddress',
       streetAddress: 'Mariyam Sefer, Ayer Tena',

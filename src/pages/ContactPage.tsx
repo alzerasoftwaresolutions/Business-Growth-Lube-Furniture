@@ -33,11 +33,15 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onRequestQuote }) => {
             <ul className="mt-6 space-y-5 text-sm text-secondary-text">
               <li className="flex items-center gap-3">
                 <Mail size={17} strokeWidth={1.75} className="shrink-0 text-clay" />
-                hello@lubefurniture.com
+                <a href="mailto:samuelassefa075@gmail.com" className="transition-colors hover:text-dark-graphite">
+                  samuelassefa075@gmail.com
+                </a>
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={17} strokeWidth={1.75} className="shrink-0 text-clay" />
-                +00 000 000 0000
+                <a href="tel:+251994077622" className="transition-colors hover:text-dark-graphite">
+                  +251 99 407 7622
+                </a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin size={17} strokeWidth={1.75} className="mt-0.5 shrink-0 text-clay" />
