@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SEO } from '../components/ui/SEO';
-import { Mail, Phone, MapPin, Check } from 'lucide-react';
+import { Mail, Phone, MapPin, Check, Clock } from 'lucide-react';
 import { PageHeader } from '../components/ui/PageHeader';
 
 interface ContactPageProps {
@@ -33,15 +33,26 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onRequestQuote }) => {
             <ul className="mt-6 space-y-5 text-sm text-secondary-text">
               <li className="flex items-center gap-3">
                 <Mail size={17} strokeWidth={1.75} className="shrink-0 text-clay" />
-                hello@lubefurniture.com
+                <a href="mailto:samuelassefa075@gmail.com" className="transition-colors hover:text-dark-graphite">
+                  samuelassefa075@gmail.com
+                </a>
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={17} strokeWidth={1.75} className="shrink-0 text-clay" />
-                +00 000 000 0000
+                <a href="tel:+251994077622" className="transition-colors hover:text-dark-graphite">
+                  +251 99 407 7622
+                </a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin size={17} strokeWidth={1.75} className="mt-0.5 shrink-0 text-clay" />
-                Showroom & Studio — Address Line, City
+                Showroom & Studio — Addis Ababa, Ethiopia
+              </li>
+              <li className="flex items-start gap-3">
+                <Clock size={17} strokeWidth={1.75} className="mt-0.5 shrink-0 text-clay" />
+                <div>
+                  <p>Monday – Saturday: 8:30 AM – 6:00 PM</p>
+                  <p className="mt-0.5 text-secondary-text/80">Sunday: Closed</p>
+                </div>
               </li>
             </ul>
 

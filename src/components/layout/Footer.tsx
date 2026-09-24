@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Phone, MapPin, Instagram, Facebook, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram, Facebook, Send, Clock } from 'lucide-react';
 import { PageType } from '../../types';
 
 interface FooterProps {
@@ -28,15 +28,26 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onExploreCollection 
             <ul className="mt-8 space-y-3 text-sm text-warm-ivory/70">
               <li className="flex items-center gap-3">
                 <Mail size={15} strokeWidth={1.75} className="shrink-0 text-clay-light" />
-                <span>hello@lubefurniture.com</span>
+                <a href="mailto:samuelassefa075@gmail.com" className="transition-colors hover:text-clay-light">
+                  samuelassefa075@gmail.com
+                </a>
               </li>
               <li className="flex items-center gap-3">
                 <Phone size={15} strokeWidth={1.75} className="shrink-0 text-clay-light" />
-                <span>+00 000 000 0000</span>
+                <a href="tel:+251994077622" className="transition-colors hover:text-clay-light">
+                  +251 99 407 7622
+                </a>
               </li>
               <li className="flex items-start gap-3">
                 <MapPin size={15} strokeWidth={1.75} className="mt-0.5 shrink-0 text-clay-light" />
-                <span>Showroom & Studio — Address Line, City</span>
+                <span>Showroom & Studio — Addis Ababa, Ethiopia</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Clock size={15} strokeWidth={1.75} className="mt-0.5 shrink-0 text-clay-light" />
+                <div>
+                  <p>Mon–Sat: 8:30 AM – 6:00 PM</p>
+                  <p className="text-warm-ivory/50">Sunday: Closed</p>
+                </div>
               </li>
             </ul>
 
@@ -45,7 +56,7 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onExploreCollection 
                 { Icon: Instagram, label: 'Instagram', href: '#' },
                 { Icon: Facebook, label: 'Facebook', href: '#' },
                 { Icon: Send, label: 'Telegram', href: '#' },
-                { Icon: Mail, label: 'Email', href: 'mailto:hello@lubefurniture.com' },
+                { Icon: Mail, label: 'Email', href: 'mailto:samuelassefa075@gmail.com' },
               ].map(({ Icon, label, href }) => (
                 <a
                   key={label}
