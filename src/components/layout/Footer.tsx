@@ -1,5 +1,5 @@
 import React from 'react';
-import { Mail, Phone, MapPin, Instagram, Facebook, Send } from 'lucide-react';
+import { Mail, Phone, MapPin, Instagram, Facebook, Send, Clock } from 'lucide-react';
 import { PageType } from '../../types';
 
 interface FooterProps {
@@ -41,6 +41,13 @@ export const Footer: React.FC<FooterProps> = ({ onNavigate, onExploreCollection 
               <li className="flex items-start gap-3">
                 <MapPin size={15} strokeWidth={1.75} className="mt-0.5 shrink-0 text-clay-light" />
                 <span>Showroom & Studio — Address Line, City</span>
+              </li>
+              <li className="flex items-start gap-3">
+                <Clock size={15} strokeWidth={1.75} className="mt-0.5 shrink-0 text-clay-light" />
+                <div>
+                  <p>Mon–Sat: 8:30 AM – 6:00 PM</p>
+                  <p className="text-warm-ivory/50">Sunday: Closed</p>
+                </div>
               </li>
             </ul>
 

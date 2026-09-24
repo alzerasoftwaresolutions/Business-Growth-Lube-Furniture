@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { SEO } from '../components/ui/SEO';
-import { Mail, Phone, MapPin, Check } from 'lucide-react';
+import { Mail, Phone, MapPin, Check, Clock } from 'lucide-react';
 import { PageHeader } from '../components/ui/PageHeader';
 
 interface ContactPageProps {
@@ -46,6 +46,13 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onRequestQuote }) => {
               <li className="flex items-start gap-3">
                 <MapPin size={17} strokeWidth={1.75} className="mt-0.5 shrink-0 text-clay" />
                 Showroom & Studio — Address Line, City
+              </li>
+              <li className="flex items-start gap-3">
+                <Clock size={17} strokeWidth={1.75} className="mt-0.5 shrink-0 text-clay" />
+                <div>
+                  <p>Monday – Saturday: 8:30 AM – 6:00 PM</p>
+                  <p className="mt-0.5 text-secondary-text/80">Sunday: Closed</p>
+                </div>
               </li>
             </ul>
 
