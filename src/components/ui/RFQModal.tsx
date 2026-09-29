@@ -1,3 +1,4 @@
+import { SolutionSlot } from '../../solutions';
 import React, { useEffect, useState } from 'react';
 import { X, Check, ArrowRight } from 'lucide-react';
 import { RFQFormData } from '../../types';
@@ -99,7 +100,10 @@ export const RFQModal: React.FC<RFQModalProps> = ({ isOpen, onClose, context }) 
           <X size={20} strokeWidth={1.75} />
         </button>
 
-        {!submitted ? (
+        <SolutionSlot
+          name="inquiry:rfq-form"
+          fallback={
+            !submitted ? (
           <div className="p-6 sm:p-10">
             <p className="text-xs font-medium uppercase tracking-editorial text-clay">Request a Quote</p>
             <h2 className="mt-2 text-2xl font-semibold tracking-headline sm:text-3xl">
@@ -214,7 +218,9 @@ export const RFQModal: React.FC<RFQModalProps> = ({ isOpen, onClose, context }) 
               Continue Exploring
             </button>
           </div>
-        )}
+        )
+          }
+        />
       </div>
     </div>
   );

@@ -1,3 +1,4 @@
+import { SolutionSlot } from '../solutions';
 import React, { useState } from 'react';
 import { SEO } from '../components/ui/SEO';
 import { Mail, Phone, MapPin, Check, Clock } from 'lucide-react';
@@ -84,7 +85,10 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onRequestQuote }) => {
           </div>
 
           <div className="border border-lube-border bg-soft-white p-6 sm:p-10">
-            {sent ? (
+            <SolutionSlot
+              name="inquiry:contact-form"
+              fallback={
+                sent ? (
               <div className="flex min-h-[380px] flex-col items-center justify-center text-center">
                 <div className="flex h-16 w-16 items-center justify-center rounded-full bg-clay/10">
                   <Check size={28} strokeWidth={2} className="text-clay" />
@@ -135,7 +139,9 @@ export const ContactPage: React.FC<ContactPageProps> = ({ onRequestQuote }) => {
                   </button>
                 </div>
               </form>
-            )}
+            )
+              }
+            />
           </div>
         </div>
       </section>

@@ -1,0 +1,31 @@
+{
+  "$schema": "./schemas/solutions.config.schema.json",
+  "version": "1.0.0",
+  "solutions": {
+    "booking-proof": {
+      "enabled": false,
+      "config": {
+        "consultationType": "showroom-visit",
+        "slotDurationMinutes": 60
+      }
+    },
+    "inquiry-proof": {
+      "enabled": false,
+      "config": {
+        "department": "Commercial Joinery & Contracts"
+      }
+    },
+    "cms-proof": {
+      "enabled": false,
+      "config": {
+        "enableCustomFinishes": false
+      }
+    },
+    "integration-proof": {
+      "enabled": false,
+      "config": {
+        "telemetryLogging": true
+      }
+    }
+  }
+}

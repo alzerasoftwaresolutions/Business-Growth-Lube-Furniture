@@ -1,3 +1,4 @@
+import { SolutionsProvider } from './solutions';
 import React, { useCallback, useEffect, useState } from 'react';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
@@ -58,7 +59,8 @@ const App: React.FC = () => {
 
 
   return (
-    <div className="flex min-h-screen flex-col bg-warm-ivory">
+    <SolutionsProvider>
+      <div className="flex min-h-screen flex-col bg-warm-ivory">
       <Analytics />
       <Header currentPage={page} onNavigate={navigate} onRequestQuote={() => openRfq()} />
 
@@ -103,7 +105,8 @@ const App: React.FC = () => {
           openRfq({ productName: product.name, collectionName });
         }}
       />
-    </div>
+      </div>
+    </SolutionsProvider>
   );
 };
 
