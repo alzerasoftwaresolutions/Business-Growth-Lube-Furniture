@@ -1,4 +1,4 @@
-export type PageType = 'home' | 'collections' | 'services' | 'about' | 'contact';
+export type PageType = 'home' | 'collections' | 'services' | 'about' | 'contact' | 'booking';
 
 export type CollectionCategory = 'living' | 'bedroom' | 'dining' | 'office';
 

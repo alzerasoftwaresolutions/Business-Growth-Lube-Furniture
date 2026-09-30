@@ -9,13 +9,14 @@ import { CollectionsPage } from './pages/CollectionsPage';
 import { ServicesPage } from './pages/ServicesPage';
 import { AboutPage } from './pages/AboutPage';
 import { ContactPage } from './pages/ContactPage';
+import { BookingPage } from './pages/BookingPage';
 import { PageType, Product } from './types';
 import { Analytics } from './components/Analytics';
 
 const App: React.FC = () => {
   const [page, setPage] = useState<PageType>(() => {
     const path = window.location.pathname.substring(1);
-    const validPages: PageType[] = ['home', 'collections', 'services', 'about', 'contact'];
+    const validPages: PageType[] = ['home', 'collections', 'services', 'about', 'contact', 'booking'];
     return validPages.includes(path as PageType) ? (path as PageType) : 'home';
   });
   const [collectionContext, setCollectionContext] = useState<string | undefined>(undefined);
@@ -26,7 +27,7 @@ const App: React.FC = () => {
   useEffect(() => {
     const handlePopState = () => {
       const path = window.location.pathname.substring(1);
-      const validPages: PageType[] = ['home', 'collections', 'services', 'about', 'contact'];
+      const validPages: PageType[] = ['home', 'collections', 'services', 'about', 'contact', 'booking'];
       setPage(validPages.includes(path as PageType) ? (path as PageType) : 'home');
     };
     window.addEventListener('popstate', handlePopState);
@@ -84,12 +85,13 @@ const App: React.FC = () => {
           />
         )}
         {page === 'services' && (
-          <ServicesPage onRequestQuote={() => openRfq()} onContact={() => navigate('contact')} />
+          <ServicesPage onRequestQuote={() => openRfq()} onContact={() => navigate('contact')} onBookConsultation={() => navigate('booking')} />
         )}
         {page === 'about' && (
           <AboutPage onRequestQuote={() => openRfq()} onExploreCollections={exploreCollections} />
         )}
         {page === 'contact' && <ContactPage onRequestQuote={() => openRfq()} />}
+        {page === 'booking' && <BookingPage onContact={() => navigate('contact')} onRequestQuote={() => openRfq()} />}
       </main>
 
       <Footer onNavigate={navigate} onExploreCollection={exploreCollection} />

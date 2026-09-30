@@ -1,6 +1,19 @@
-import React from 'react';
+﻿import React from 'react';
+import type {
+  PersistenceRecord,
+  PersistenceResult,
+  PersistenceQuery,
+  PersistenceStore,
+} from './persistence';
 
-export type SolutionCapability = 'booking' | 'inquiry' | 'cms' | 'integration' | 'admin' | string;
+export type SolutionCapability =
+  | 'booking'
+  | 'inquiry'
+  | 'cms'
+  | 'integration'
+  | 'persistence'
+  | 'admin'
+  | string;
 
 export type SolutionStatus = 'registered' | 'active' | 'disabled' | 'failed';
 
@@ -66,3 +79,10 @@ export interface SolutionsConfig {
   version: string;
   solutions: Record<string, SolutionConfigEntry>;
 }
+
+export type {
+  PersistenceRecord,
+  PersistenceResult,
+  PersistenceQuery,
+  PersistenceStore,
+};

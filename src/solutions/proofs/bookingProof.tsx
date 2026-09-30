@@ -1,34 +1,59 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { SolutionModule, SolutionManifest } from '../types';
+import { persistenceAdapter } from '../persistence';
 
 export const bookingManifest: SolutionManifest = {
   id: 'booking-proof',
   name: 'Showroom Consultation Booking Proof',
   version: '1.0.0',
   description: 'Proof of concept showroom appointment and custom furniture consultation scheduler.',
-  capabilities: ['booking'],
+  capabilities: ['booking', 'persistence'],
   slots: ['booking:widget'],
   defaultEnabled: false,
 };
 
-export const ConsultationBookingWidget: React.FC<{ roomType?: string }> = ({ roomType = 'Living & Dining' }) => {
+export const ConsultationBookingWidget: React.FC<{ roomType?: string }> = ({
+  roomType = 'Living & Dining',
+}) => {
   const [selectedDate, setSelectedDate] = useState('');
   const [selectedSlot, setSelectedSlot] = useState('');
-  const [confirmed, setConfirmed] = useState(false);
+  const [bookingId, setBookingId] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (selectedDate && selectedSlot) {
-      setConfirmed(true);
+    if (!selectedDate || !selectedSlot) return;
+
+    setErrorMessage(null);
+    setSubmitting(true);
+
+    const result = await persistenceAdapter.saveRecord('bookings', {
+      roomType,
+      selectedDate,
+      selectedSlot,
+      status: 'confirmed',
+      source: 'consultation-booking-widget',
+    });
+
+    if (result.success) {
+      setBookingId(result.id);
+    } else {
+      setErrorMessage(result.error || 'Failed to save consultation reservation.');
     }
+    setSubmitting(false);
   };
 
-  if (confirmed) {
+  if (bookingId) {
     return (
       <div className="border border-clay bg-soft-white p-6 text-center" data-testid="booking-proof-confirmed">
         <h4 className="text-lg font-semibold tracking-headline text-dark-graphite">Consultation Reserved</h4>
         <p className="mt-2 text-sm text-secondary-text">
-          Your in-studio consultation for <strong>{roomType}</strong> is booked on <strong>{selectedDate}</strong> at <strong>{selectedSlot}</strong>.
+          Your in-studio consultation for <strong>{roomType}</strong> is booked on <strong>{selectedDate}</strong> at{' '}
+          <strong>{selectedSlot}</strong>.
+        </p>
+        <p className="mt-3 font-mono text-xs text-secondary-text" data-testid="booking-proof-id">
+          Reservation ID: <span className="font-semibold text-clay">{bookingId}</span> (Persisted)
         </p>
       </div>
     );
@@ -40,6 +65,18 @@ export const ConsultationBookingWidget: React.FC<{ roomType?: string }> = ({ roo
       <p className="mt-1 text-xs text-secondary-text">
         Schedule a private design session with our joinery specialists for {roomType}.
       </p>
+
+      {errorMessage && (
+        <div
+          className="mt-3 p-3 border border-red-500 bg-red-50 text-red-700 text-xs"
+          role="alert"
+          data-testid="booking-proof-error"
+        >
+          <strong className="block font-semibold">Reservation Failed</strong>
+          <p>{errorMessage}</p>
+        </div>
+      )}
+
       <form onSubmit={handleSubmit} className="mt-4 space-y-3">
         <div>
           <label className="block text-[11px] font-medium uppercase tracking-editorial text-secondary-text mb-1">
@@ -71,9 +108,11 @@ export const ConsultationBookingWidget: React.FC<{ roomType?: string }> = ({ roo
         </div>
         <button
           type="submit"
-          className="w-full rounded-full bg-clay px-4 py-2.5 text-xs font-semibold uppercase tracking-editorial text-white hover:bg-clay-dark transition-colors"
+          disabled={submitting}
+          className="w-full rounded-full bg-clay px-4 py-2.5 text-xs font-semibold uppercase tracking-editorial text-white hover:bg-clay-dark transition-colors disabled:opacity-50"
+          data-testid="booking-proof-submit-btn"
         >
-          Confirm Consultation
+          {submitting ? 'Confirming Consultation...' : 'Confirm Consultation'}
         </button>
       </form>
     </div>

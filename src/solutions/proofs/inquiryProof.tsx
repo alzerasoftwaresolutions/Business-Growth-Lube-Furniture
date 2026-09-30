@@ -1,18 +1,22 @@
-import React, { useState } from 'react';
+﻿import React, { useState } from 'react';
 import { SolutionModule, SolutionManifest, LeadSubmission, LeadSubmissionResult } from '../types';
+import { persistenceAdapter } from '../persistence';
 
 export const inquiryManifest: SolutionManifest = {
   id: 'inquiry-proof',
   name: 'Priority Commercial RFQ Proof',
   version: '1.0.0',
   description: 'Proof of concept commercial contract inquiry flow with custom material swatches.',
-  capabilities: ['inquiry'],
+  capabilities: ['inquiry', 'persistence'],
   slots: ['inquiry:contact-form', 'inquiry:rfq-form'],
   defaultEnabled: false,
 };
 
 export const PriorityCommercialRFQ: React.FC = () => {
   const [submitted, setSubmitted] = useState(false);
+  const [inquiryId, setInquiryId] = useState<string | null>(null);
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+  const [submitting, setSubmitting] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -20,17 +24,37 @@ export const PriorityCommercialRFQ: React.FC = () => {
     timberFinish: 'White Oak & Natural Linen',
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setSubmitted(true);
+    setErrorMessage(null);
+    setSubmitting(true);
+
+    const result = await persistenceAdapter.saveRecord('inquiries', {
+      fullName: formData.name,
+      email: formData.email,
+      scope: formData.scope,
+      timberFinish: formData.timberFinish,
+      source: 'priority-commercial-rfq',
+    });
+
+    if (result.success) {
+      setInquiryId(result.id);
+      setSubmitted(true);
+    } else {
+      setErrorMessage(result.error || 'Failed to persist inquiry.');
+    }
+    setSubmitting(false);
   };
 
-  if (submitted) {
+  if (submitted && inquiryId) {
     return (
       <div className="border border-clay bg-soft-white p-8 text-center" data-testid="inquiry-proof-submitted">
         <h4 className="text-xl font-semibold tracking-headline text-dark-graphite">Priority RFQ Received</h4>
         <p className="mt-2 text-sm text-secondary-text">
           Thank you, <strong>{formData.name}</strong>. Your commercial project specifications have been assigned to our Senior Contract Joiner.
+        </p>
+        <p className="mt-3 font-mono text-xs text-secondary-text" data-testid="inquiry-proof-id">
+          Reference ID: <span className="font-semibold text-clay">{inquiryId}</span> (Persisted)
         </p>
       </div>
     );
@@ -39,8 +63,20 @@ export const PriorityCommercialRFQ: React.FC = () => {
   return (
     <form onSubmit={handleSubmit} className="border border-clay/40 bg-soft-white p-6 space-y-4" data-testid="inquiry-proof-form">
       <div className="border border-clay/30 bg-clay/5 p-3 text-xs text-clay">
-        ✨ <strong>Active Solution:</strong> Priority Commercial Contract & Joinery RFQ Pipeline
+        Active Solution: Priority Commercial Contract &amp; Joinery RFQ Pipeline
       </div>
+
+      {errorMessage && (
+        <div
+          className="border border-red-500 bg-red-50 p-3 text-xs text-red-700"
+          role="alert"
+          data-testid="inquiry-proof-error"
+        >
+          <strong className="block font-semibold">RFQ Submission Failed</strong>
+          <p>{errorMessage}</p>
+        </div>
+      )}
+
       <div>
         <label className="block text-xs font-medium uppercase tracking-editorial text-secondary-text mb-1">
           Full Name / Project Director *
@@ -94,9 +130,10 @@ export const PriorityCommercialRFQ: React.FC = () => {
       </div>
       <button
         type="submit"
-        className="w-full rounded-full bg-clay px-8 py-3.5 text-xs font-semibold uppercase tracking-editorial text-white hover:bg-clay-dark transition-colors"
+        disabled={submitting}
+        className="w-full rounded-full bg-clay px-8 py-3.5 text-xs font-semibold uppercase tracking-editorial text-white hover:bg-clay-dark transition-colors disabled:opacity-50"
       >
-        Submit Contract Quotation
+        {submitting ? 'Submitting Quotation...' : 'Submit Contract Quotation'}
       </button>
     </form>
   );
@@ -111,10 +148,24 @@ export const inquiryProofModule: SolutionModule = {
     return null;
   },
   onLeadSubmitted: async (lead: LeadSubmission): Promise<LeadSubmissionResult> => {
+    const saveResult = await persistenceAdapter.saveRecord('inquiries', {
+      ...lead,
+      receivedAt: Date.now(),
+      solutionId: inquiryManifest.id,
+    });
+
+    if (!saveResult.success) {
+      return {
+        success: false,
+        message: saveResult.error || 'Failed to persist inquiry.',
+      };
+    }
+
     return {
       success: true,
-      message: `Inquiry intercepted by Solution "${inquiryManifest.id}" for ${lead.fullName}.`,
-      leadId: `lube-lead-${Date.now()}`,
+      message: `Inquiry intercepted and persisted by Solution "${inquiryManifest.id}" for ${lead.fullName}.`,
+      leadId: saveResult.id,
+      metadata: { record: saveResult.record },
     };
   },
 };

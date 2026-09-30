@@ -8,6 +8,7 @@ import { ServicesFAQ } from '../sections/ServicesFAQ';
 interface ServicesPageProps {
   onRequestQuote: () => void;
   onContact: () => void;
+  onBookConsultation?: () => void;
 }
 
 const stageLabels: Record<string, string> = {
@@ -16,7 +17,7 @@ const stageLabels: Record<string, string> = {
   '03': 'Go Commercial'
 };
 
-export const ServicesPage: React.FC<ServicesPageProps> = ({ onRequestQuote, onContact }) => {
+export const ServicesPage: React.FC<ServicesPageProps> = ({ onRequestQuote, onContact, onBookConsultation }) => {
   return (
     <>
       <SEO
@@ -85,7 +86,7 @@ export const ServicesPage: React.FC<ServicesPageProps> = ({ onRequestQuote, onCo
             Start with a conversation. We'll help you shape the brief.
           </p>
           <div className="flex justify-center">
-            <CTAButtonGroup primaryLabel="Request a Quote" onPrimary={onRequestQuote} secondaryLabel="Contact Us" onSecondary={onContact} />
+            <CTAButtonGroup primaryLabel="Request a Quote" onPrimary={onRequestQuote} secondaryLabel="Book Consultation" onSecondary={onBookConsultation || onContact} />
           </div>
         </div>
       </section>
